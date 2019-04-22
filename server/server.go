@@ -1,15 +1,17 @@
 package server
 
 import(
-  "net/http"
-  "time"
+  "html/template"
   "log"
+  "net/http"
+  "path"
+  "time"
 )
 
 func LaunchServer() {
   mux := http.NewServeMux()
 
-  mux.HandleFunc("/", myFunc)
+  mux.HandleFunc("/", homeHandler)
 
   server := &http.Server{
     Addr:         ":"+SERVER_PORT,
@@ -22,8 +24,28 @@ func LaunchServer() {
   log.Fatal(server.ListenAndServe())
 }
 
-func myFunc(w http.ResponseWriter, r *http.Request) {
-  w.WriteHeader(200)
-  w.Write([]byte("Test"))
+//////////////// HANDLER FUNCTIONS ///////////////////
+
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+  var (
+    err error
+    t   *template.Template
+  )
+
+  filename := path.Join(STATIC_FOLDER, HTML_FOLDER, "index.html")
+
+  t, err = template.ParseFiles(filename)
+  if err != nil {
+    log.Println(err)
+    return
+  }
+
+  err = t.Execute(w, nil)
+  if err != nil {
+    log.Println(err)
+    return
+  }
 }
+
+//////////////////////////////////////////////////////
 

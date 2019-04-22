@@ -1,9 +1,9 @@
 package main
 
-import(
-  "github.com/bryson/webapp/server"
+import (
+	"github.com/bryson/webapp/server"
 )
 
 func main() {
-  server.LaunchServer()
+	server.LaunchServer()
 }
