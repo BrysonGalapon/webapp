@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/bryson/webapp/server"
+	"github.com/BrysonGalapon/webapp/server"
 )
 
 func main() {
